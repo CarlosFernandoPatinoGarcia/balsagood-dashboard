@@ -1,0 +1,299 @@
+/* src/theme/AppStyles.css */
+
+/* Variables de colores (basadas en tu colors.js) para fácil cambio */
+:root {
+  --primary: #2c3e50;
+  --secondary: #7f8c8d;
+  --background: #f4f6f8;
+  --card: #ffffff;
+  --border: #e0e0e0;
+  --text: #333333;
+  --white: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--background);
+}
+
+/* --- Contenedores --- */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+.content {
+  padding: 20px;
+  padding-bottom: 40px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.center-container {
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background);
+}
+
+/* --- Header --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: var(--card);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  /* Sombra suave web */
+}
+
+.header-title {
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.header-subtitle {
+  color: var(--secondary);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* --- Títulos --- */
+.section-title {
+  color: var(--primary);
+  /* Cambiado a oscuro para web */
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* --- Tablas --- */
+.table-container {
+  background-color: var(--card);
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.table-title {
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  display: block;
+}
+
+/* Estructura de Tabla HTML */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  color: var(--secondary);
+  font-weight: bold;
+  text-align: center;
+  padding: 12px;
+  border-bottom: 2px solid var(--border);
+}
+
+td {
+  color: var(--text);
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+/* Hover effect: Algo que no podías hacer fácilmente en JS */
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+.total-row td {
+  border-top: 2px solid var(--border);
+  font-weight: bold;
+  background-color: #fafafa;
+  color: var(--primary);
+}
+
+/* --- Mensajes Vacíos --- */
+.empty-row {
+  padding: 40px;
+  text-align: center;
+  color: var(--secondary);
+  font-style: italic;
+}
+
+/* --- Dashboard & Grid Layout --- */
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+/* --- Menu Cards --- */
+.menu-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.menu-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.menu-card.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f8f9fa;
+}
+
+.menu-card.disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border);
+}
+
+.menu-icon {
+  display: block;
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.menu-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* --- Buttons --- */
+.btn-icon {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.btn-icon:hover {
+  background-color: #f0f0f0;
+}
+
+/* --- Modal --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+  margin-top: 0;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.btn-save,
+.btn-cancel {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-save {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-cancel {
+  background-color: #e0e0e0;
+  color: var(--text);
+}
