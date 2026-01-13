@@ -4,7 +4,7 @@ import { loadApiConfiguration } from './api/Api';
 import AppNavigator from './Route/Routes';
 import './App.css';
 
-export default function App() {
+function App() {
 
   useEffect(() => {
     // Cargar configuración de IP al iniciar la app
@@ -14,10 +14,9 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      {/* Contenedor principal de la aplicación */}
-      <div className="app-root">
-        <AppNavigator />
-      </div>
+      <AppNavigator />
     </BrowserRouter>
   );
 }
+
+export default App;

@@ -3,11 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import api, { configureApi } from '../api/Api'; // Asegúrate de importar configureApi
 import '../App.css'; // Importa los estilos globales
 
-const MenuButton = ({ title, onClick, icon, disabled }) => (
-    <div
-        className={`card menu-card ${disabled ? 'disabled' : ''}`}
-        onClick={!disabled ? onClick : undefined}
-    >
+const MenuButton = ({ title, onClick, icon }) => (
+    <div className="card menu-card" onClick={onClick}>
         <div className="card-body">
             <span className="menu-icon">{icon}</span>
             <span className="menu-title">{title}</span>
@@ -32,7 +29,7 @@ const PageMainView = () => {
         configureApi(ipAddress);
 
         setModalVisible(false);
-        alert('Configuración guardada. La página se recargará.');
+        alert('Configuración guardada. Recargando la página.');
         window.location.reload(); // Recargar para asegurar que la nueva IP se use en todo lado
     };
 
@@ -55,32 +52,25 @@ const PageMainView = () => {
 
             {/* Menú Principal (Grid) */}
             <div className="grid-container">
-                {/* Desactivado temporalmente */}
                 <MenuButton
-                    title="Inventario de Bloques (Carga)"
-                    icon="🌲"
-                    onClick={() => alert("Próximamente")}
-                    disabled={true}
+                    title="Proveedores"
+                    icon="📈"
+                    onClick={() => navigate('/proveedores')}
                 />
-
+                <MenuButton
+                    title="Camaras de Secado"
+                    icon="📈"
+                    onClick={() => navigate('/camaras-de-secado')}
+                />
+                <MenuButton
+                    title="Dashboard Pallets"
+                    icon="📈"
+                    onClick={() => navigate('/inventario-pallets')}
+                />
                 <MenuButton
                     title="Tabla Stock Bloques"
                     icon="📊"
                     onClick={() => navigate('/inventario-bloques')}
-                />
-
-                {/* Desactivado temporalmente */}
-                <MenuButton
-                    title="Tabla Stock Pallets"
-                    icon="📋"
-                    onClick={() => alert("Próximamente")}
-                    disabled={true}
-                />
-
-                <MenuButton
-                    title="Dashboard Pallets (Vivo)"
-                    icon="📈"
-                    onClick={() => navigate('/inventario-pallets')}
                 />
             </div>
 
