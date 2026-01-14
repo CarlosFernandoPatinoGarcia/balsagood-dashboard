@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import api from '../api/Api';
 import '../App.css';
 
+import PageModalResumenBloques from './PageModalResumenBloques';
+
 // Rango estático de largos comunes (ajustar según necesidad del negocio)
-const LARGO_OPTIONS = [26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15];
+const LARGO_OPTIONS = [25, 24, 23, 22, 21, 20, 18, 16, 14, 12, 10, 8, 6];
 
 const PageInventarioBloques = () => {
     const [reportData, setReportData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [lastUpdate, setLastUpdate] = useState(new Date());
+    const [showModal, setShowModal] = useState(false);
 
     const fetchInventory = async () => {
         setLoading(true);
@@ -90,6 +93,8 @@ const PageInventarioBloques = () => {
         totals.presentado.L.bft + totals.presentado.P.bft +
         totals.encolado.L.bft + totals.encolado.P.bft;
 
+
+
     const fmtNum = (n) => n > 0 ? n : '-';
     const fmtBft = (n) => n > 0 ? n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-';
 
@@ -103,11 +108,20 @@ const PageInventarioBloques = () => {
                     </span>
                 </div>
                 <div className="header-actions">
-                    <div className="total-badge">
-                        Total: {fmtBft(totalGlobalBft)} BFT
-                    </div>
+                    <button onClick={() => setShowModal(true)} className="btn-save" style={{ backgroundColor: '#1565c0', marginRight: 10 }}>
+                        Ver Resumen
+                    </button>
+                    <button onClick={fetchInventory} className="btn-save" style={{ marginLeft: 10 }}>
+                        Actualizar
+                    </button>
                 </div>
             </header>
+
+            <PageModalResumenBloques
+                visible={showModal}
+                onClose={() => setShowModal(false)}
+                data={reportData}
+            />
 
             <div className="table-container">
                 <table className="custom-table" style={{ width: '100%', tableLayout: 'fixed' }}>
@@ -116,6 +130,7 @@ const PageInventarioBloques = () => {
                             <th rowSpan="3" style={{ width: '60px', backgroundColor: '#f4f6f8' }}>Largo</th>
                             <th colSpan="4" style={{ backgroundColor: '#fff3e0', color: '#e65100' }}>PRESENTADOS</th>
                             <th colSpan="4" style={{ backgroundColor: '#e3f2fd', color: '#0d47a1' }}>ENCOLADOS</th>
+                            <th rowSpan="3" style={{ width: '60px', backgroundColor: '#f4f6f8' }}>Porc.</th>
                         </tr>
                         <tr>
                             {/* Sub-headers Madera */}
@@ -132,29 +147,38 @@ const PageInventarioBloques = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {rows.map((row, i) => (
-                            <tr key={i}>
-                                <td style={{ fontWeight: 'bold' }}>{row.largo}</td>
+                        {rows.map((row, i) => {
+                            const rowBft = row.presentado.L.bft + row.presentado.P.bft + row.encolado.L.bft + row.encolado.P.bft;
+                            const porcentaje = totalGlobalBft > 0 ? (rowBft / totalGlobalBft) * 100 : 0;
 
-                                {/* Presentado L */}
-                                <td>{fmtNum(row.presentado.L.cant)}</td>
-                                <td>{fmtBft(row.presentado.L.bft)}</td>
-                                {/* Presentado P */}
-                                <td>{fmtNum(row.presentado.P.cant)}</td>
-                                <td>{fmtBft(row.presentado.P.bft)}</td>
+                            return (
+                                <tr key={i}>
+                                    <td style={{ fontWeight: 'bold' }}>{row.largo}</td>
 
-                                {/* Encolado L */}
-                                <td>{fmtNum(row.encolado.L.cant)}</td>
-                                <td>{fmtBft(row.encolado.L.bft)}</td>
-                                {/* Encolado P */}
-                                <td>{fmtNum(row.encolado.P.cant)}</td>
-                                <td>{fmtBft(row.encolado.P.bft)}</td>
-                            </tr>
-                        ))}
+                                    {/* Presentado L */}
+                                    <td>{fmtNum(row.presentado.L.cant)}</td>
+                                    <td>{fmtBft(row.presentado.L.bft)}</td>
+                                    {/* Presentado P */}
+                                    <td>{fmtNum(row.presentado.P.cant)}</td>
+                                    <td>{fmtBft(row.presentado.P.bft)}</td>
+
+                                    {/* Encolado L */}
+                                    <td>{fmtNum(row.encolado.L.cant)}</td>
+                                    <td>{fmtBft(row.encolado.L.bft)}</td>
+                                    {/* Encolado P */}
+                                    <td>{fmtNum(row.encolado.P.cant)}</td>
+                                    <td>{fmtBft(row.encolado.P.bft)}</td>
+
+                                    {/* Porcentaje */}
+                                    <td>{porcentaje > 0 ? porcentaje.toFixed(2) : '- '}%</td>
+
+                                </tr>
+                            );
+                        })}
                     </tbody>
                     <tfoot>
                         <tr className="total-row">
-                            <td>TOTAL</td>
+                            <td>SUBTOTALES:</td>
                             <td>{fmtNum(totals.presentado.L.cant)}</td>
                             <td>{fmtBft(totals.presentado.L.bft)}</td>
                             <td>{fmtNum(totals.presentado.P.cant)}</td>
@@ -166,7 +190,15 @@ const PageInventarioBloques = () => {
                         </tr>
                     </tfoot>
                 </table>
+
+
             </div>
+
+            <header className="dashboard-header">
+                <div className="header-title">
+                    Total: {fmtBft(totalGlobalBft)} BFT
+                </div>
+            </header>
         </div>
     );
 };
