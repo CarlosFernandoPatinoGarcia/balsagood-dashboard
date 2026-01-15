@@ -4,6 +4,8 @@ import { loadApiConfiguration } from './api/Api';
 import AppNavigator from './Route/Routes';
 import './App.css';
 
+import Layout from './components/Layout';
+
 function App() {
 
   useEffect(() => {
@@ -14,7 +16,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AppNavigator />
+      <Layout>
+        <AppNavigator />
+      </Layout>
     </BrowserRouter>
   );
 }

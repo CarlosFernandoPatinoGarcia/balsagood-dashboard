@@ -71,15 +71,22 @@ export default function PageVistaCamarasSecado() {
         setModalVisible(true);
     };
 
+    //Manejar si la capacidad disponible es diferente de la capacidad, que lance una advertencia
     const handleDelete = async (id) => {
-        if (!window.confirm("¿Confirma eliminar esta cámara de secado?")) return;
+        const response = await api.get(`/api/camaras/${id}`);
+        if (response.data.camaraCapacidad !== response.data.capacidadDisponible) {
+            alert(`No se puede eliminar la cámara ${response.data.camaraDescripcion} porque está ocupada. Capacidad disponible: ${response.data.capacidadDisponible}. Capacidad: ${response.data.camaraCapacidad}`);
+            return;
+        }
+        if (!window.confirm(`¿Confirma eliminar la cámara ${response.data.camaraDescripcion}?`)) return;
         try {
+
             await api.delete(`/api/camaras/${id}`);
-            alert("Cámara eliminada");
+            alert(`Cámara ${response.data.camaraDescripcion} eliminada`);
             fetchCamarasSecado();
         } catch (error) {
             console.error(error);
-            alert("Error al eliminar la cámara");
+            alert(`Error al eliminar la cámara ${response.data.camaraDescripcion}`);
         }
     };
 
@@ -94,16 +101,16 @@ export default function PageVistaCamarasSecado() {
         try {
             if (editingId) {
                 await api.put(`/api/camaras/${editingId}`, payload);
-                alert("Cámara actualizada");
+                alert(`Cámara ${response.data.camaraDescripcion} actualizada`);
             } else {
                 await api.post('/api/camaras', payload);
-                alert("Cámara creada");
+                alert(`Cámara ${response.data.camaraDescripcion} creada`);
             }
             setModalVisible(false);
             fetchCamarasSecado();
         } catch (error) {
             console.error(error);
-            alert("Error al guardar");
+            alert(`Error al guardar la cámara ${response.data.camaraDescripcion}`);
         }
     };
 
