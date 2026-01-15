@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api, { configureApi } from '../api/Api'; // Asegúrate de importar configureApi
-import '../App.css'; // Importa los estilos globales
+import api, { configureApi } from '../api/Api';
+import '../App.css';
 
 const MenuButton = ({ title, onClick, icon }) => (
     <div className="card menu-card" onClick={onClick}>
@@ -36,19 +36,7 @@ const PageMainView = () => {
     return (
         <div className="dashboard-container">
             {/* Header Principal */}
-            <div className="dashboard-header">
-                <div>
-                    <h1 className="header-title">Panel Supervisor</h1>
-                    <p className="header-subtitle">Seleccione una opción</p>
-                </div>
-                <button
-                    className="btn-icon"
-                    onClick={() => setModalVisible(true)}
-                    title="Configuración"
-                >
-                    ⚙️
-                </button>
-            </div>
+
 
             {/* Menú Principal (Grid) */}
             <div className="grid-container">
@@ -73,42 +61,6 @@ const PageMainView = () => {
                     onClick={() => navigate('/inventario-bloques')}
                 />
             </div>
-
-            {/* Modal de Configuración (Overlay Web) */}
-            {modalVisible && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <h2 className="modal-title">Conexión al Servidor</h2>
-
-                        <div className="form-group">
-                            <label>Dirección IP:</label>
-                            <input
-                                type="text"
-                                className="form-input"
-                                value={ipAddress}
-                                onChange={(e) => setIpAddress(e.target.value)}
-                                placeholder="Ej. 192.168.X.X"
-                            />
-                            <small>Puerto por defecto: 8080</small>
-                        </div>
-
-                        <div className="modal-actions">
-                            <button
-                                className="btn-cancel"
-                                onClick={() => setModalVisible(false)}
-                            >
-                                Cancelar
-                            </button>
-                            <button
-                                className="btn-save"
-                                onClick={handleSaveSettings}
-                            >
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

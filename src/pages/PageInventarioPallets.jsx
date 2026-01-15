@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/Api';
 import '../App.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ESPESOR_OPTIONS = [3.0, 2.5, 2.0, 1.5, 1.0, 0.875];
 
@@ -8,6 +10,8 @@ const PageInventarioPallets = () => {
     const [reportData, setReportData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [lastUpdate, setLastUpdate] = useState(new Date());
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     const fetchInventory = async () => {
         setLoading(true);
@@ -76,7 +80,27 @@ const PageInventarioPallets = () => {
         return tableRows;
     };
 
-    const rows = processTableData(reportData);
+    const filteredData = reportData.filter(item => {
+        if (!startDate && !endDate) return true;
+
+        const fechaIngreso = item.fechaIngreso ? new Date(item.fechaIngreso) : null;
+
+        if (startDate) {
+            if (!fechaIngreso) return false;
+            const s = new Date(startDate); s.setHours(0, 0, 0, 0);
+            if (fechaIngreso < s) return false;
+        }
+
+        if (endDate) {
+            if (!fechaIngreso) return false;
+            const e = new Date(endDate); e.setHours(23, 59, 59, 999);
+            if (fechaIngreso > e) return false;
+        }
+
+        return true;
+    });
+
+    const rows = processTableData(filteredData);
 
     // Calcular Totales de Columnas
     const totals = rows.reduce((acc, row) => {
@@ -110,14 +134,41 @@ const PageInventarioPallets = () => {
                         Última actualización: {lastUpdate.toLocaleTimeString()}
                     </span>
                 </div>
-                <div className="header-actions">
-                    <div className="total-badge">
-                        Total Planta: {fmt(totalGlobal)} BFT
+
+
+                <div className="date-picker-container">
+                    <div className="date-picker" style={{ marginRight: '20px' }}>
+                        <span className="header-subtitle">
+                            Desde:
+                        </span>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            selectsStart
+                            startDate={startDate}
+                            endDate={endDate}
+                            placeholderText="Fecha Inicio"
+                            className="bg-white border rounded px-2 py-1"
+                        />
+                        <span className="header-subtitle">
+                            Hasta:
+                        </span>
+                        <DatePicker
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            selectsEnd
+                            startDate={startDate}
+                            endDate={endDate}
+                            minDate={startDate}
+                            placeholderText="Fecha Fin"
+                            className="bg-white border rounded px-2 py-1"
+                        />
                     </div>
-                    <button onClick={fetchInventory} className="btn-save" style={{ marginLeft: 10 }}>
-                        Actualizar
-                    </button>
                 </div>
+                <button onClick={fetchInventory} className="btn-save" style={{ marginLeft: 10 }}>
+                    Actualizar
+                </button>
+
             </header>
 
             <div className="table-container">
@@ -172,6 +223,11 @@ const PageInventarioPallets = () => {
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+            <div className="header-actions">
+                <div className="total-badge">
+                    Total Planta: {fmt(totalGlobal)} BFT
+                </div>
             </div>
         </div>
     );

@@ -67,6 +67,14 @@ const Sidebar = () => {
             </div>
 
             <div className="sidebar-section">
+                <h3 className="sidebar-section-title">Dashboard</h3>
+                <NavLink to="/dashboard" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+                    <span className="sidebar-icon"><Icons.Menu /></span>
+                    Resumen
+                </NavLink>
+            </div>
+
+            <div className="sidebar-section">
                 <h3 className="sidebar-section-title">ADMINISTRACIÓN</h3>
                 <NavLink to="/proveedores" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
                     <span className="sidebar-icon"><Icons.People /></span>

@@ -261,7 +261,7 @@ const PageInventarioBloques = () => {
 
             {/* tabla de contenedores */}
             {/* tabla de contenedores y totales calculados */}
-            <h2 className="section-title" style={{ marginTop: '20px', textAlign: 'center' }}>BALSAGOOD - PLANTA 4<br />CONTROL DE BLOQUES PRESENTADOS Y ENCOLADOS</h2>
+            {/* <h2 className="section-title" style={{ marginTop: '20px', textAlign: 'center' }}>CONTROL DE BLOQUES PRESENTADOS Y ENCOLADOS</h2> */}
 
             <div className="table-container">
                 <table className="custom-table" style={{ width: '100%', tableLayout: 'fixed' }}>
@@ -309,7 +309,7 @@ const PageInventarioBloques = () => {
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th style={{ backgroundColor: '#f4f6f8' }}>Concepto</th>
+                                        <th style={{ backgroundColor: '#f4f6f8' }}>Tipo de madera</th>
                                         <th style={{ backgroundColor: '#fff3e0' }}>Presentados BFT</th>
                                         <th style={{ backgroundColor: '#fff3e0' }}>Contenedores</th>
                                         <th style={{ backgroundColor: '#e3f2fd' }}>Encolados BFT</th>
