@@ -14,6 +14,7 @@ const AppRoutes = () => {
     return (
         <Routes>
             {/* Ruta Principal (Dashboard) */}
+            <Route path="/" element={<PageMainView />} />
             <Route path="/dashboard" element={<PageMainView />} />
 
             {/* Rutas de Reportes y Tablas */}

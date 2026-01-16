@@ -36,6 +36,14 @@ const PageMainView = () => {
     return (
         <div className="dashboard-container">
             {/* Header Principal */}
+            <div className="welcome-hero">
+                <h1 className="welcome-title">Bienvenido al Dashboard de BalsaGood</h1>
+                <p className="welcome-desc">Gestión integral de inventarios, cámaras de secado y producción.</p>
+
+                <div className="welcome-instructions">
+                    Seleccione una opción del menú para comenzar
+                </div>
+            </div>
 
 
             {/* Menú Principal (Grid) */}
@@ -51,15 +59,20 @@ const PageMainView = () => {
                     onClick={() => navigate('/camaras-de-secado')}
                 />
                 <MenuButton
-                    title="Dashboard Pallets"
+                    title="Pallets"
                     icon="📈"
                     onClick={() => navigate('/inventario-pallets')}
                 />
                 <MenuButton
-                    title="Tabla Stock Bloques"
+                    title="Bloques"
                     icon="📊"
                     onClick={() => navigate('/inventario-bloques')}
                 />
+            </div>
+
+            {/* Footer Silencioso */}
+            <div className="dashboard-footer-message">
+                No olvide conectarse a su red de internet mediante la IP de su red actual.
             </div>
         </div>
     );

@@ -54,6 +54,64 @@ body {
   /* Sombra suave web */
 }
 
+.dashboard-footer-message {
+  text-align: center;
+  color: #bdc3c7;
+  /* Color gris claro para ser sutil */
+  font-size: 12px;
+  margin-top: 40px;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* --- Welcome Hero Section --- */
+.welcome-hero {
+  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 20px rgba(44, 62, 80, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.welcome-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.5px;
+}
+
+.welcome-desc {
+  font-size: 18px;
+  opacity: 0.9;
+  margin: 0 0 20px 0;
+  font-weight: 300;
+}
+
+.welcome-instructions {
+  font-size: 14px;
+  opacity: 0.8;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+
 .header-title {
   color: var(--primary);
   font-size: 18px;
