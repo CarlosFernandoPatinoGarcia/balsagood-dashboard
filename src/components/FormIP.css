@@ -1,0 +1,73 @@
+/* src/components/FormIP.css */
+
+.form-ip-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ip-mode-toggle {
+    display: flex;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    padding: 4px;
+    margin-bottom: 10px;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.toggle-btn.active {
+    background-color: white;
+    color: var(--primary, #2c3e50);
+    /* Fallback if var not defined */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+}
+
+.toggle-btn:hover:not(.active) {
+    color: #333;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.form-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-col label {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+/* Reusing global .form-input, but ensuring full width */
+.form-input {
+    width: 100%;
+    box-sizing: border-box;
+    /* Critical for padding */
+}
+
+.btn-full {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 15px;
+}

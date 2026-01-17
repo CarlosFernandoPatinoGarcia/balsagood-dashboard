@@ -102,6 +102,10 @@ const Sidebar = () => {
                     <span className="sidebar-icon"><Icons.FileText /></span>
                     Produccion de Taller
                 </NavLink>
+                <NavLink to="/pallets-secos" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+                    <span className="sidebar-icon"><Icons.FileText /></span>
+                    Pallets Secos
+                </NavLink>
             </div>
 
             <div className="sidebar-section">

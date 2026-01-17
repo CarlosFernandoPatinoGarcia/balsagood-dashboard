@@ -7,6 +7,7 @@ import PageVistaCamarasSecado from '../pages/PageVistaCamarasSecado';
 import PageInventarioPallets from '../pages/PageInventarioPallets';
 import PageInventarioBloques from '../pages/PageInventarioBloques';
 import PageVistaRecepcionesMV from '../pages/PageVistaRecepcionesMV';
+import PageDetallePalletsSecos from '../pages/PageDetallePalletsSecos';
 import PageVistaProveedores from '../pages/PageVistaProveedores';
 import PageVistaConfiguracion from '../pages/PageVistaConfiguracion';
 
@@ -23,6 +24,7 @@ const AppRoutes = () => {
             <Route path="/inventario-pallets" element={<PageInventarioPallets />} />
             <Route path="/inventario-bloques" element={<PageInventarioBloques />} />
             <Route path="/recepciones" element={<PageVistaRecepcionesMV />} />
+            <Route path="/pallets-secos" element={<PageDetallePalletsSecos />} />
             <Route path="/configuracion" element={<PageVistaConfiguracion />} />
 
             {/* Redirección por defecto */}
