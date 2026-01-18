@@ -37,12 +37,8 @@ const PageMainView = () => {
         <div className="dashboard-container">
             {/* Header Principal */}
             <div className="welcome-hero">
-                <h1 className="welcome-title">Bienvenido al Dashboard de BalsaGood</h1>
-                <p className="welcome-desc">Gestión integral de inventarios, cámaras de secado y producción.</p>
-
-                <div className="welcome-instructions">
-                    Seleccione una opción del menú para comenzar
-                </div>
+                <h1 className="welcome-title">Bienvenido al panel de administración de BalsaGood</h1>
+                <p className="welcome-desc">Nuestros supervisores lo mantienen informado de lo sucedido en producción.</p>
             </div>
 
 
@@ -50,29 +46,29 @@ const PageMainView = () => {
             <div className="grid-container">
                 <MenuButton
                     title="Proveedores"
-                    icon="📈"
+                    icon="👨🏻‍💼"
                     onClick={() => navigate('/proveedores')}
                 />
                 <MenuButton
                     title="Camaras de Secado"
-                    icon="📈"
+                    icon="🎛️"
                     onClick={() => navigate('/camaras-de-secado')}
                 />
                 <MenuButton
                     title="Pallets"
-                    icon="📈"
+                    icon="🌲"
                     onClick={() => navigate('/inventario-pallets')}
                 />
                 <MenuButton
                     title="Bloques"
-                    icon="📊"
+                    icon="📦"
                     onClick={() => navigate('/inventario-bloques')}
                 />
             </div>
 
             {/* Footer Silencioso */}
             <div className="dashboard-footer-message">
-                No olvide conectarse a su red de internet mediante la IP de su red actual.
+                Balsagood - Todos los derechos reservados.
             </div>
         </div>
     );

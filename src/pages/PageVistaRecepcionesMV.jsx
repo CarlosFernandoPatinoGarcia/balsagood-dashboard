@@ -9,8 +9,11 @@ const PageVistaRecepcionesMV = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await api.get('/api/proceso/recepciones-madera-verde');
-            setData(response.data || []);
+            const response = await Promise.all([
+                api.get('/api/proceso/recepciones-madera-verde'),
+                new Promise(resolve => setTimeout(resolve, 1000))
+            ]);
+            setData(response[0].data || []);
         } catch (error) {
             console.error("Error fetching recepciones:", error);
         } finally {
@@ -28,8 +31,8 @@ const PageVistaRecepcionesMV = () => {
         <div className="dashboard-container">
             <header className="dashboard-header">
                 <div>
-                    <h1 className="header-title">Recepciones Madera Verde</h1>
-                    <span className="header-subtitle">Historial de recepciones</span>
+                    <h1 className="header-title">Recepciones de Madera Verde</h1>
+                    <span className="header-subtitle">Aquí podrá encontrar el detalle de los pallets que ingresan a la planta</span>
                 </div>
                 <div className="header-actions">
                     <button onClick={fetchData} className="btn-save">
@@ -40,7 +43,18 @@ const PageVistaRecepcionesMV = () => {
 
             <div className="table-container">
                 {loading ? (
-                    <div style={{ padding: 20, textAlign: 'center' }}>Cargando...</div>
+                    <div className="loader-container">
+                        <div className="planer-machine">
+                            <div className="plank"></div>
+                            <div className="cutter-head"></div>
+                            <div className="wood-chips">
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                            </div>
+                        </div>
+                        <div className="loader-text">Procesando...</div>
+                    </div>
                 ) : (
                     <table className="custom-table">
                         <thead>

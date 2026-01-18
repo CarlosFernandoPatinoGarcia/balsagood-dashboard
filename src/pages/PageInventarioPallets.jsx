@@ -16,9 +16,12 @@ const PageInventarioPallets = () => {
     const fetchInventory = async () => {
         setLoading(true);
         try {
-            const response = await api.get('/api/inventario/pallets');
-            if (response.data) {
-                setReportData(response.data);
+            const response = await Promise.all([
+                api.get('/api/inventario/pallets'),
+                new Promise((resolve) => setTimeout(resolve, 1000))
+            ]);
+            if (response[0].data) {
+                setReportData(response[0].data);
                 setLastUpdate(new Date());
             }
         } catch (error) {
@@ -172,57 +175,73 @@ const PageInventarioPallets = () => {
             </header>
 
             <div className="table-container">
-                <table className="custom-table" style={{ width: '100%', tableLayout: 'fixed' }}>
-                    <thead>
-                        <tr>
-                            <th rowSpan="2" style={{ width: '80px', backgroundColor: '#f4f6f8' }}>Espesor</th>
-                            <th colSpan="2" style={{ backgroundColor: '#e8f5e9', color: '#2e7d32' }}>MADERA VERDE</th>
-                            <th colSpan="2" style={{ backgroundColor: '#fff3e0', color: '#ef6c00' }}>SECADORAS</th>
-                            <th colSpan="2" style={{ backgroundColor: '#e3f2fd', color: '#1565c0' }}>STOCK SECO</th>
-                        </tr>
-                        <tr>
-                            {/* Verde */}
-                            <th style={{ backgroundColor: '#e8f5e9', fontSize: '13px' }}>Liviana</th>
-                            <th style={{ backgroundColor: '#e8f5e9', fontSize: '13px' }}>Pesada</th>
-                            {/* Secadoras */}
-                            <th style={{ backgroundColor: '#fff3e0', fontSize: '13px' }}>Liviana</th>
-                            <th style={{ backgroundColor: '#fff3e0', fontSize: '13px' }}>Pesada</th>
-                            {/* Stock Seco */}
-                            <th style={{ backgroundColor: '#e3f2fd', fontSize: '13px' }}>Liviana</th>
-                            <th style={{ backgroundColor: '#e3f2fd', fontSize: '13px' }}>Pesada</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows.map((row, i) => (
-                            <tr key={i}>
-                                <td style={{ fontWeight: 'bold' }}>{row.espesor}</td>
 
-                                {/* Verde */}
-                                <td>{fmt(row.verde.L)}</td>
-                                <td>{fmt(row.verde.P)}</td>
-
-                                {/* Secadoras */}
-                                <td>{fmt(row.secado.L)}</td>
-                                <td>{fmt(row.secado.P)}</td>
-
-                                {/* Stock Seco */}
-                                <td>{fmt(row.stock.L)}</td>
-                                <td>{fmt(row.stock.P)}</td>
+                {loading ? (
+                    <div className="loader-container">
+                        <div className="planer-machine">
+                            <div className="plank"></div>
+                            <div className="cutter-head"></div>
+                            <div className="wood-chips">
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                            </div>
+                        </div>
+                        <div className="loader-text">Procesando...</div>
+                    </div>
+                ) : (
+                    <table className="custom-table" style={{ width: '100%', tableLayout: 'fixed' }}>
+                        <thead>
+                            <tr>
+                                <th rowSpan="2" style={{ width: '80px', backgroundColor: '#f4f6f8' }}>Espesor</th>
+                                <th colSpan="2" style={{ backgroundColor: '#e8f5e9', color: '#2e7d32' }}>MADERA VERDE</th>
+                                <th colSpan="2" style={{ backgroundColor: '#fff3e0', color: '#ef6c00' }}>SECADORAS</th>
+                                <th colSpan="2" style={{ backgroundColor: '#e3f2fd', color: '#1565c0' }}>STOCK SECO</th>
                             </tr>
-                        ))}
-                    </tbody>
-                    <tfoot>
-                        <tr className="total-row">
-                            <td>TOTAL</td>
-                            <td>{fmt(totals.verde.L)}</td>
-                            <td>{fmt(totals.verde.P)}</td>
-                            <td>{fmt(totals.secado.L)}</td>
-                            <td>{fmt(totals.secado.P)}</td>
-                            <td>{fmt(totals.stock.L)}</td>
-                            <td>{fmt(totals.stock.P)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
+                            <tr>
+                                {/* Verde */}
+                                <th style={{ backgroundColor: '#e8f5e9', fontSize: '13px' }}>Liviana</th>
+                                <th style={{ backgroundColor: '#e8f5e9', fontSize: '13px' }}>Pesada</th>
+                                {/* Secadoras */}
+                                <th style={{ backgroundColor: '#fff3e0', fontSize: '13px' }}>Liviana</th>
+                                <th style={{ backgroundColor: '#fff3e0', fontSize: '13px' }}>Pesada</th>
+                                {/* Stock Seco */}
+                                <th style={{ backgroundColor: '#e3f2fd', fontSize: '13px' }}>Liviana</th>
+                                <th style={{ backgroundColor: '#e3f2fd', fontSize: '13px' }}>Pesada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows.map((row, i) => (
+                                <tr key={i}>
+                                    <td style={{ fontWeight: 'bold' }}>{row.espesor}</td>
+
+                                    {/* Verde */}
+                                    <td>{fmt(row.verde.L)}</td>
+                                    <td>{fmt(row.verde.P)}</td>
+
+                                    {/* Secadoras */}
+                                    <td>{fmt(row.secado.L)}</td>
+                                    <td>{fmt(row.secado.P)}</td>
+
+                                    {/* Stock Seco */}
+                                    <td>{fmt(row.stock.L)}</td>
+                                    <td>{fmt(row.stock.P)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                        <tfoot>
+                            <tr className="total-row">
+                                <td>TOTAL</td>
+                                <td>{fmt(totals.verde.L)}</td>
+                                <td>{fmt(totals.verde.P)}</td>
+                                <td>{fmt(totals.secado.L)}</td>
+                                <td>{fmt(totals.secado.P)}</td>
+                                <td>{fmt(totals.stock.L)}</td>
+                                <td>{fmt(totals.stock.P)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                )}
             </div>
             <div className="header-actions">
                 <div className="total-badge">

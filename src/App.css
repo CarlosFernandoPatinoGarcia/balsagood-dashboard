@@ -577,3 +577,244 @@ tr:hover {
 .sidebar::-webkit-scrollbar {
   width: 4px;
 }
+
+/* --- Authentication Layout --- */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2c3e50 0%, #bdc3c7 100%);
+  padding: 20px;
+}
+
+.auth-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-title {
+  color: var(--primary);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-input {
+  padding: 12px 15px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-input:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.auth-btn {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-top: 10px;
+}
+
+.auth-btn:hover {
+  background-color: #34495e;
+}
+
+.auth-btn:active {
+  transform: translateY(1px);
+}
+
+.auth-link {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--secondary);
+}
+
+.auth-link a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+/* --- Loader Cepillado de Madera --- */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 20px;
+}
+
+.planer-machine {
+  position: relative;
+  width: 200px;
+  height: 60px;
+  background: #2c3e50;
+  /* Color máquina oscuro */
+  border-radius: 4px;
+  overflow: visible;
+  /* Chips fly out */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* El tablón crudo entrando (izquierda) */
+.plank {
+  position: absolute;
+  width: 60px;
+  height: 20px;
+  background: #d35400;
+  /* Madera oscura / cruda */
+  left: -60px;
+  animation: feedPlank 2s infinite linear;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* El rodillo / cabezal de corte */
+.cutter-head {
+  position: relative;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background: #95a5a6;
+  border-radius: 50%;
+  border: 4px dashed #7f8c8d;
+  animation: spinCutter 0.5s infinite linear;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Virutas saliendo */
+.wood-chips {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: transparent;
+  pointer-events: none;
+}
+
+.chip {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #f1c40f;
+  /* Color viruta clara */
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/* Animaciones de partículas */
+.chip:nth-child(1) {
+  animation: flyChip 0.8s infinite ease-out 0.0s;
+}
+
+.chip:nth-child(2) {
+  animation: flyChip 0.8s infinite ease-out 0.2s;
+}
+
+.chip:nth-child(3) {
+  animation: flyChip 0.8s infinite ease-out 0.4s;
+}
+
+@keyframes feedPlank {
+  0% {
+    left: -60px;
+    background: #d35400;
+    /* Crudo */
+    width: 60px;
+  }
+
+  40% {
+    /* Entrando a la máquina */
+    background: #d35400;
+  }
+
+  50% {
+    /* Pasando por el centro */
+    background: #e67e22;
+    /* Transición */
+  }
+
+  60% {
+    /* Saliendo cepillado */
+    background: #f39c12;
+    /* Madera clara / pulida */
+  }
+
+  100% {
+    left: 200px;
+    /* Salida total */
+    background: #f39c12;
+    width: 60px;
+  }
+}
+
+@keyframes spinCutter {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes flyChip {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(20px, -40px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.loader-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Icono de Balsagood */
+.balsagood-icon {
+  width: 80px;
+  height: 80px;
+
+}

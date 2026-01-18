@@ -4,7 +4,7 @@ import { loadApiConfiguration } from './api/Api';
 import AppNavigator from './Route/Routes';
 import './App.css';
 
-import Layout from './components/Layout';
+
 
 function App() {
 
@@ -16,9 +16,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Layout>
-        <AppNavigator />
-      </Layout>
+
+      <AppNavigator />
+
     </BrowserRouter>
   );
 }

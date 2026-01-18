@@ -9,8 +9,11 @@ const PageDetallePalletsSecos = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await api.get('/api/proceso/pallets-secos');
-            setData(response.data || []);
+            const response = await Promise.all([
+                api.get('/api/proceso/pallets-secos'),
+                new Promise(resolve => setTimeout(resolve, 1000))
+            ]);
+            setData(response[0].data || []);
         } catch (error) {
             console.error("Error fetching pallets secos:", error);
         } finally {
@@ -45,8 +48,8 @@ const PageDetallePalletsSecos = () => {
         <div className="dashboard-container">
             <header className="dashboard-header">
                 <div>
-                    <h1 className="header-title">Detalle Pallets Secos</h1>
-                    <span className="header-subtitle">Historial de pallets procesados en secado</span>
+                    <h1 className="header-title">Madera Seca</h1>
+                    <span className="header-subtitle">Aquí podrá encontrar el detalle los pallets y las secadoras a las que entraron</span>
                 </div>
                 <div className="header-actions">
                     <button onClick={fetchData} className="btn-save">
@@ -57,7 +60,18 @@ const PageDetallePalletsSecos = () => {
 
             <div className="table-container">
                 {loading ? (
-                    <div style={{ padding: 20, textAlign: 'center' }}>Cargando...</div>
+                    <div className="loader-container">
+                        <div className="planer-machine">
+                            <div className="plank"></div>
+                            <div className="cutter-head"></div>
+                            <div className="wood-chips">
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                            </div>
+                        </div>
+                        <div className="loader-text">Procesando...</div>
+                    </div>
                 ) : (
                     <table className="custom-table">
                         <thead>

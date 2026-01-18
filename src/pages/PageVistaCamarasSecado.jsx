@@ -16,9 +16,12 @@ export default function PageVistaCamarasSecado() {
     const fetchCamarasSecado = async () => {
         try {
             setCargando(true);
-            const response = await api.get('/api/camaras');
-            if (response.data) {
-                setCamarasSecado(response.data);
+            const response = await Promise.all([
+                api.get('/api/camaras'),
+                new Promise(resolve => setTimeout(resolve, 1000))
+            ]);
+            if (response[0].data) {
+                setCamarasSecado(response[0].data);
             }
         } catch (error) {
             console.error('Error cargando camaras de secado:', error);
@@ -134,59 +137,74 @@ export default function PageVistaCamarasSecado() {
             </header>
 
             <div className="table-container">
-                <table className="custom-table" style={{ width: '100%', tableLayout: 'fixed' }}>
-                    <thead>
-                        <tr>
-                            <th
-                                style={{ width: '80px', backgroundColor: '#f4f6f8', cursor: 'pointer' }}
-                                onClick={() => handleSort('idCamara')}
-                            >
-                                ID {sortConfig.key === 'idCamara' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
-                            </th>
-                            <th
-                                style={{ backgroundColor: '#e3f2fd', color: '#1565c0', cursor: 'pointer' }}
-                                onClick={() => handleSort('camaraDescripcion')}
-                            >
-                                Descripcion {sortConfig.key === 'camaraDescripcion' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
-                            </th>
-                            <th
-                                style={{ backgroundColor: '#e3f2fd', color: '#1565c0', cursor: 'pointer' }}
-                                onClick={() => handleSort('camaraCapacidad')}
-                            >
-                                Capacidad {sortConfig.key === 'camaraCapacidad' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
-                            </th>
-                            <th style={{ backgroundColor: '#e3f2fd', color: '#1565c0' }}>Disponible</th>
-                            <th style={{ width: '150px', backgroundColor: '#f4f6f8' }}>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sortedCamaras.map(c => (
-                            <tr key={c.idCamara}>
-                                <td style={{ fontWeight: 'bold' }}>{c.idCamara}</td>
-                                <td>{c.camaraDescripcion}</td>
-                                <td>{c.camaraCapacidad}</td>
-                                <td>{c.capacidadDisponible}</td>
-                                <td>
-                                    <button
-                                        className="btn-icon"
-                                        onClick={() => handleStartEdit(c)}
-                                        title="Editar"
-                                    >
-                                        ✏️
-                                    </button>
-                                    <button
-                                        className="btn-icon"
-                                        onClick={() => handleDelete(c.idCamara)}
-                                        title="Eliminar"
-                                        style={{ color: 'red' }}
-                                    >
-                                        🗑️
-                                    </button>
-                                </td>
+                {cargando ? (
+                    <div className="loader-container">
+                        <div className="planer-machine">
+                            <div className="plank"></div>
+                            <div className="cutter-head"></div>
+                            <div className="wood-chips">
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                            </div>
+                        </div>
+                        <div className="loader-text">Procesando...</div>
+                    </div>
+                ) : (
+                    <table className="custom-table" style={{ width: '100%', tableLayout: 'fixed' }}>
+                        <thead>
+                            <tr>
+                                <th
+                                    style={{ width: '80px', backgroundColor: '#f4f6f8', cursor: 'pointer' }}
+                                    onClick={() => handleSort('idCamara')}
+                                >
+                                    ID {sortConfig.key === 'idCamara' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                                </th>
+                                <th
+                                    style={{ backgroundColor: '#e3f2fd', color: '#1565c0', cursor: 'pointer' }}
+                                    onClick={() => handleSort('camaraDescripcion')}
+                                >
+                                    Descripcion {sortConfig.key === 'camaraDescripcion' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                                </th>
+                                <th
+                                    style={{ backgroundColor: '#e3f2fd', color: '#1565c0', cursor: 'pointer' }}
+                                    onClick={() => handleSort('camaraCapacidad')}
+                                >
+                                    Capacidad {sortConfig.key === 'camaraCapacidad' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                                </th>
+                                <th style={{ backgroundColor: '#e3f2fd', color: '#1565c0' }}>Disponible</th>
+                                <th style={{ width: '150px', backgroundColor: '#f4f6f8' }}>Acciones</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {sortedCamaras.map(c => (
+                                <tr key={c.idCamara}>
+                                    <td style={{ fontWeight: 'bold' }}>{c.idCamara}</td>
+                                    <td>{c.camaraDescripcion}</td>
+                                    <td>{c.camaraCapacidad}</td>
+                                    <td>{c.capacidadDisponible}</td>
+                                    <td>
+                                        <button
+                                            className="btn-icon"
+                                            onClick={() => handleStartEdit(c)}
+                                            title="Editar"
+                                        >
+                                            ✏️
+                                        </button>
+                                        <button
+                                            className="btn-icon"
+                                            onClick={() => handleDelete(c.idCamara)}
+                                            title="Eliminar"
+                                            style={{ color: 'red' }}
+                                        >
+                                            🗑️
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
 
             {/* Modal */}

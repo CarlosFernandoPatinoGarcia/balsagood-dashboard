@@ -15,9 +15,12 @@ export default function PageVistaProveedores() {
     const fetchProveedores = async () => {
         try {
             setCargando(true);
-            const response = await api.get('/api/proveedores');
-            if (response.data) {
-                setProveedores(response.data);
+            const response = await Promise.all([
+                api.get('/api/proveedores'),
+                new Promise(resolve => setTimeout(resolve, 1000))
+            ]);
+            if (response[0].data) {
+                setProveedores(response[0].data);
             }
         } catch (error) {
             console.error('Error fetching proveedores:', error);
@@ -127,50 +130,65 @@ export default function PageVistaProveedores() {
             </header>
 
             <div className="table-container">
-                <table className="custom-table" style={{ width: '100%', tableLayout: 'fixed' }}>
-                    <thead>
-                        <tr>
-                            <th
-                                style={{ width: '80px', backgroundColor: '#f4f6f8', cursor: 'pointer' }}
-                                onClick={() => handleSort('idProveedor')}
-                            >
-                                ID {sortConfig.key === 'idProveedor' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
-                            </th>
-                            <th
-                                style={{ backgroundColor: '#e3f2fd', color: '#1565c0', cursor: 'pointer' }}
-                                onClick={() => handleSort('provNombre')}
-                            >
-                                Nombre del Proveedor {sortConfig.key === 'provNombre' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
-                            </th>
-                            <th style={{ width: '150px', backgroundColor: '#f4f6f8' }}>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sortedProveedores.map(p => (
-                            <tr key={p.idProveedor}>
-                                <td style={{ fontWeight: 'bold' }}>{p.idProveedor}</td>
-                                <td>{p.provNombre}</td>
-                                <td>
-                                    <button
-                                        className="btn-icon"
-                                        onClick={() => handleStartEdit(p)}
-                                        title="Editar"
-                                    >
-                                        ✏️
-                                    </button>
-                                    <button
-                                        className="btn-icon"
-                                        onClick={() => handleDelete(p.idProveedor)}
-                                        title="Eliminar"
-                                        style={{ color: 'red' }}
-                                    >
-                                        🗑️
-                                    </button>
-                                </td>
+                {cargando ? (
+                    <div className="loader-container">
+                        <div className="planer-machine">
+                            <div className="plank"></div>
+                            <div className="cutter-head"></div>
+                            <div className="wood-chips">
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                                <div className="chip"></div>
+                            </div>
+                        </div>
+                        <div className="loader-text">Procesando...</div>
+                    </div>
+                ) : (
+                    <table className="custom-table" style={{ width: '100%', tableLayout: 'fixed' }}>
+                        <thead>
+                            <tr>
+                                <th
+                                    style={{ width: '80px', backgroundColor: '#f4f6f8', cursor: 'pointer' }}
+                                    onClick={() => handleSort('idProveedor')}
+                                >
+                                    ID {sortConfig.key === 'idProveedor' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                                </th>
+                                <th
+                                    style={{ backgroundColor: '#e3f2fd', color: '#1565c0', cursor: 'pointer' }}
+                                    onClick={() => handleSort('provNombre')}
+                                >
+                                    Nombre del Proveedor {sortConfig.key === 'provNombre' && (sortConfig.direction === 'asc' ? '▲' : '▼')}
+                                </th>
+                                <th style={{ width: '150px', backgroundColor: '#f4f6f8' }}>Acciones</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {sortedProveedores.map(p => (
+                                <tr key={p.idProveedor}>
+                                    <td style={{ fontWeight: 'bold' }}>{p.idProveedor}</td>
+                                    <td>{p.provNombre}</td>
+                                    <td>
+                                        <button
+                                            className="btn-icon"
+                                            onClick={() => handleStartEdit(p)}
+                                            title="Editar"
+                                        >
+                                            ✏️
+                                        </button>
+                                        <button
+                                            className="btn-icon"
+                                            onClick={() => handleDelete(p.idProveedor)}
+                                            title="Eliminar"
+                                            style={{ color: 'red' }}
+                                        >
+                                            🗑️
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
 
             {/* Modal Formulario */}
