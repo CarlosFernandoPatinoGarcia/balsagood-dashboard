@@ -272,6 +272,29 @@ tr:hover {
 /* --- Buttons --- */
 .btn-icon {
   background: none;
+  color: var(--primary);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.btn-add-icon {
+  background: none;
+  color: var(--primary);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.btn-delete-icon {
+  background: none;
+  color: red;
   border: none;
   font-size: 24px;
   cursor: pointer;
@@ -584,8 +607,15 @@ tr:hover {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  width: 100vw;
+  /* Ensure full viewport width */
+  margin: 0;
+  padding: 0;
   background: linear-gradient(135deg, #2c3e50 0%, #bdc3c7 100%);
-  padding: 20px;
+  position: absolute;
+  /* Force it out of normal flow if parent is constraining it */
+  top: 0;
+  left: 0;
 }
 
 .auth-card {

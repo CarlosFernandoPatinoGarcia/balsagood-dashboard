@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import api from '../api/Api';
 import '../App.css';
 
+import Icons from '../components/Icons';
+
 export default function PageVistaProveedores() {
     const [proveedores, setProveedores] = useState([]);
     const [cargando, setCargando] = useState(false);
@@ -123,6 +125,7 @@ export default function PageVistaProveedores() {
                     <button onClick={fetchProveedores} className="btn-cancel" style={{ marginRight: 10 }}>
                         ↻ Refrescar
                     </button>
+
                     <button onClick={handleStartAdd} className="btn-save">
                         + Nuevo Proveedor
                     </button>
@@ -169,19 +172,19 @@ export default function PageVistaProveedores() {
                                     <td>{p.provNombre}</td>
                                     <td>
                                         <button
-                                            className="btn-icon"
+                                            className="btn-add-icon"
                                             onClick={() => handleStartEdit(p)}
                                             title="Editar"
                                         >
-                                            ✏️
+                                            <Icons.Edit />
                                         </button>
                                         <button
-                                            className="btn-icon"
+                                            className="btn-delete-icon"
                                             onClick={() => handleDelete(p.idProveedor)}
                                             title="Eliminar"
-                                            style={{ color: 'red' }}
+
                                         >
-                                            🗑️
+                                            <Icons.Delete />
                                         </button>
                                     </td>
                                 </tr>

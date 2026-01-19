@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import api from '../api/Api';
 import '../App.css';
 
+import Icons from '../components/Icons';
+
 export default function PageVistaCamarasSecado() {
     const [camarasSecado, setCamarasSecado] = useState([]);
     const [cargando, setCargando] = useState(false);
@@ -185,19 +187,18 @@ export default function PageVistaCamarasSecado() {
                                     <td>{c.capacidadDisponible}</td>
                                     <td>
                                         <button
-                                            className="btn-icon"
+                                            className="btn-add-icon"
                                             onClick={() => handleStartEdit(c)}
                                             title="Editar"
                                         >
-                                            ✏️
+                                            <Icons.Edit />
                                         </button>
                                         <button
-                                            className="btn-icon"
+                                            className="btn-delete-icon"
                                             onClick={() => handleDelete(c.idCamara)}
                                             title="Eliminar"
-                                            style={{ color: 'red' }}
                                         >
-                                            🗑️
+                                            <Icons.Delete />
                                         </button>
                                     </td>
                                 </tr>

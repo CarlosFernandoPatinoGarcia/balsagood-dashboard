@@ -11,9 +11,7 @@ const buildUrl = (input) => {
     if (!url.startsWith('http')) {
         url = `http://${url}`;
     }
-    // NOTA: Ya no agregamos puerto por defecto a ciegas, 
-    // confiamos en que si el usuario guardó un "Full URL" o "IP+Puerto", viene correcto.
-    // Solo si es una IP "pelada" antigua podría necesitarse, pero mejor ser explícitos.
+    // si el usuario guardó un "Full URL" o "IP+Puerto", viene correcto.
     return url;
 };
 
@@ -30,9 +28,17 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        const token = JSON.parse(localStorage.getItem('user'));
-        if (token) {
-            config.headers['Authorization'] = 'Bearer ' + token;
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            const token = user.token || user.accessToken || user.jwt;
+
+            if (token && typeof token === 'string') {
+                config.headers['Authorization'] = 'Bearer ' + token;
+            } else if (typeof user === 'string') {
+                config.headers['Authorization'] = 'Bearer ' + user;
+            } else {
+                console.warn('User object found but no valid token property detected:', user);
+            }
         }
         return config;
     },

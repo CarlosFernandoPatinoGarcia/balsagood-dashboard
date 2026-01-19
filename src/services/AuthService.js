@@ -1,5 +1,7 @@
 import api from '../api/Api';
 
+const SESSION_DURATION = 3600000; // 1 Hora en milisegundos
+
 const login = async (usuarioNombre, usuarioClave) => {
     // Uses relative path, respects Api.jsx baseURL
     const response = await api.post('/api/auth/login', {
@@ -7,7 +9,17 @@ const login = async (usuarioNombre, usuarioClave) => {
         usuarioClave,
     });
     if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data));
+        // Fix: If response.data is a string (JWT), wrap it. 
+        // Spreading a string (...response.data) causes the {0:'e', 1:'y'} bug.
+        const userData = typeof response.data === 'string'
+            ? { token: response.data }
+            : { ...response.data };
+
+        const userWithExpiry = {
+            ...userData,
+            expiry: Date.now() + SESSION_DURATION
+        };
+        localStorage.setItem('user', JSON.stringify(userWithExpiry));
     }
     return response.data;
 };
@@ -18,7 +30,16 @@ const register = async (usuarioNombre, usuarioClave) => {
         usuarioClave,
     });
     if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data));
+        // Fix: If response.data is a string (JWT), wrap it.
+        const userData = typeof response.data === 'string'
+            ? { token: response.data }
+            : { ...response.data };
+
+        const userWithExpiry = {
+            ...userData,
+            expiry: Date.now() + SESSION_DURATION
+        };
+        localStorage.setItem('user', JSON.stringify(userWithExpiry));
     }
     return response.data;
 };
@@ -28,7 +49,15 @@ const logout = () => {
 };
 
 const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem('user'));
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return null;
+
+    const user = JSON.parse(userStr);
+    if (user.expiry && Date.now() > user.expiry) {
+        logout();
+        return null;
+    }
+    return user;
 };
 
 const AuthService = {
