@@ -83,6 +83,11 @@ const PageRegistroPresentados = () => {
         const pesoSinCola = parseFloat(formData.bloquePesoSinCola);
         const pesoConCola = formData.bloquePesoConCola ? parseFloat(formData.bloquePesoConCola) : null;
 
+        if (pesoConCola && pesoConCola <= pesoSinCola) {
+            alert("El Peso Con Cola debe ser MAYOR que el Peso Sin Cola.");
+            return;
+        }
+
         const bloqueData = {
             bloqueCodigo: conteoBloque, // Puede ser el editado o uno nuevo
             tipoMadera: {

@@ -114,6 +114,20 @@ const PageVistaBloques = () => {
             return;
         }
 
+        const pesoSinCola = parseFloat(formData.bloquePesoSinCola);
+        const pesoConCola = formData.bloquePesoConCola ? parseFloat(formData.bloquePesoConCola) : null;
+
+        if (pesoConCola && pesoConCola <= pesoSinCola) {
+            alert("El Peso Con Cola debe ser MAYOR que el Peso Sin Cola.");
+            return;
+        }
+
+        let estado = 'PR'; // Default state potentially for new/reset but if updating, maybe we should be careful. 
+        // User instruction: "Si es así (pesoConCola > pesoSinCola), entonces el estado es 'EN' (ENCOLADO)"
+        if (pesoConCola && pesoConCola > pesoSinCola) {
+            estado = 'EN';
+        }
+
         const bloqueUpdate = {
             bloqueCodigo: formData.bloqueCodigo, // Mantener código original
             tipoMadera: { idTipoMadera: parseInt(formData.tipoMaderaId) },
@@ -121,9 +135,9 @@ const PageVistaBloques = () => {
             bloqueAncho: CONSTANT_ANCHO,
             bloqueAlto: CONSTANT_ALTO,
             bloqueBftFinal: calculateBft(largo),
-            bloquePesoSinCola: parseFloat(formData.bloquePesoSinCola),
-            bloquePesoConCola: formData.bloquePesoConCola ? parseFloat(formData.bloquePesoConCola) : null,
-            // Estado y Orden de Taller ignorados/asignados por backend
+            bloquePesoSinCola: pesoSinCola,
+            bloquePesoConCola: pesoConCola,
+            estado: estado
         };
 
         console.log("Indice editando: ", indiceEditando);
