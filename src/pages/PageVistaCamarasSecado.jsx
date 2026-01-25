@@ -106,16 +106,16 @@ export default function PageVistaCamarasSecado() {
         try {
             if (editingId) {
                 await api.put(`/api/camaras/${editingId}`, payload);
-                alert(`Cámara ${response.data.camaraDescripcion} actualizada`);
+                alert(`Cámara ${payload.camaraDescripcion} actualizada`);
             } else {
                 await api.post('/api/camaras', payload);
-                alert(`Cámara ${response.data.camaraDescripcion} creada`);
+                alert(`Cámara ${payload.camaraDescripcion} creada`);
             }
             setModalVisible(false);
             fetchCamarasSecado();
         } catch (error) {
             console.error(error);
-            alert(`Error al guardar la cámara ${response.data.camaraDescripcion}`);
+            alert(`Error al guardar la cámara ${payload.camaraDescripcion}`);
         }
     };
 

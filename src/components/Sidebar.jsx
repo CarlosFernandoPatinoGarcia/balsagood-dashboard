@@ -30,6 +30,10 @@ const Sidebar = () => {
                     <span className="sidebar-icon"><Icons.Dryer /></span>
                     Camaras de secado
                 </NavLink>
+                <NavLink to="/bloques-producidos" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+                    <span className="sidebar-icon"><Icons.Block /></span>
+                    Bloques producidos
+                </NavLink>
 
                 {/* <div className="sidebar-button-container">
                     <button className="sidebar-action-btn">
@@ -47,6 +51,10 @@ const Sidebar = () => {
                 <NavLink to="/pallets-secos" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
                     <span className="sidebar-icon"><Icons.DryadSquare /></span>
                     Madera seca
+                </NavLink>
+                <NavLink to="/registro-presentados" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+                    <span className="sidebar-icon"><Icons.Presentacion /></span>
+                    Presentación
                 </NavLink>
             </div>
 

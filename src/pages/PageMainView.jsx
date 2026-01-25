@@ -62,7 +62,7 @@ const PageMainView = () => {
                 <MenuButton
                     title="Bloques"
                     icon="📦"
-                    onClick={() => navigate('/bloques-producidos')}
+                    onClick={() => navigate('/inventario-bloques')}
                 />
             </div>
 

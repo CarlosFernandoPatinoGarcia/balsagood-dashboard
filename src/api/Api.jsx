@@ -43,6 +43,14 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
+        if (error.response && error.response.status === 401) {
+            console.warn("Sesión expirada o token inválido (401). Cerrando sesión...");
+            localStorage.removeItem('user');
+            // Opcional: Redirigir a login
+            if (!window.location.pathname.includes('/login')) {
+                window.location.href = '/login';
+            }
+        }
         return Promise.reject(error);
     }
 );

@@ -11,6 +11,8 @@ import PageDetallePalletsSecos from '../pages/PageDetallePalletsSecos';
 import PageVistaProveedores from '../pages/PageVistaProveedores';
 import PageVistaConfiguracion from '../pages/PageVistaConfiguracion';
 import PageDetalleBloquesDespachados from '../pages/PageDetalleBloquesDespachados';
+import PageRegistroPresentados from '../pages/PageRegistroPresentados';
+import PageBloquesProducidos from '../pages/PageVistaBloques';
 import PrivateRoute from '../Route/PrivateRoute';
 import PageRegister from '../auth/PageRegister';
 import PageLogin from '../auth/PageLogin';
@@ -38,6 +40,8 @@ const AppRoutes = () => {
                     <Route path="/bloques-despachados" element={<PageDetalleBloquesDespachados />} />
                     <Route path="/recepciones" element={<PageVistaRecepcionesMV />} />
                     <Route path="/pallets-secos" element={<PageDetallePalletsSecos />} />
+                    <Route path="/bloques-producidos" element={<PageBloquesProducidos />} />
+                    <Route path="/registro-presentados" element={<PageRegistroPresentados />} />
                     <Route path="/configuracion" element={<PageVistaConfiguracion />} />
                 </Route>
             </Route>

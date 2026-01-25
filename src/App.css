@@ -344,6 +344,13 @@ tr:hover {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
+  color: var(--primary);
+}
+
+.form-group-label {
+  font-weight: 500;
+  color: var(--primary);
+  font-size: 16px;
 }
 
 .form-input {
