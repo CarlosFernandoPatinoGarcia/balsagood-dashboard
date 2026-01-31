@@ -52,6 +52,10 @@ const Sidebar = () => {
                     <span className="sidebar-icon"><Icons.DryadSquare /></span>
                     Madera seca
                 </NavLink>
+                <NavLink to="/pallets-ingresados" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+                    <span className="sidebar-icon"><Icons.Presentacion /></span>
+                    Ingresar madera
+                </NavLink>
                 <NavLink to="/registro-presentados" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
                     <span className="sidebar-icon"><Icons.Presentacion /></span>
                     Presentación
